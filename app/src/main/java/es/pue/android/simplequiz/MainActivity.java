@@ -5,13 +5,14 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
-public class MainActivity extends AppCompatActivity {
+public class MainActivity extends AppCompatActivity implements View.OnClickListener {
 
     TextView tv;
     Button btnTrue;
@@ -33,6 +34,9 @@ public class MainActivity extends AppCompatActivity {
 
         questions.add(new Question(R.string.q1, true));
         questions.add(new Question(R.string.q2, true));
+        questions.add(new Question(R.string.q3, true));
+        questions.add(new Question(R.string.q4, true));
+        questions.add(new Question(R.string.q5, true));
 
         tv.setText(questions.get(currentQuestionIndex).getQuestion());
 
@@ -43,5 +47,30 @@ public class MainActivity extends AppCompatActivity {
                 tv.setText(questions.get(currentQuestionIndex).getQuestion());
             }
         });
+
+        btnTrue.setOnClickListener(this);
+        btnFalse.setOnClickListener(this);
+    }
+
+    @Override
+    public void onClick(View v) {
+        int id = v.getId();
+
+        if (id == R.id.btnTrue) {
+            checkAnswer(true);
+        } else if (id == R.id.btnFalse) {
+            checkAnswer(false);
+        }
+    }
+
+    private void checkAnswer(boolean a) {
+        boolean isAnswerTrue = questions.get(currentQuestionIndex).isAnswerTrue();
+        int result = R.string.fail;
+
+        if(isAnswerTrue == a) {
+            result = R.string.success;
+        }
+
+        Toast.makeText(this, result, Toast.LENGTH_LONG).show();
     }
 }
