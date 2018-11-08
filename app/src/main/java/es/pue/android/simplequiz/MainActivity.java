@@ -43,8 +43,16 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         btnNext.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                currentQuestionIndex += 1;
-                tv.setText(questions.get(currentQuestionIndex).getQuestion());
+                if(currentQuestionIndex < questions.size() - 1)
+                {
+                    currentQuestionIndex += 1;
+                    tv.setText(questions.get(currentQuestionIndex).getQuestion());
+                }
+                else
+                {
+                    currentQuestionIndex = questions.size() - 1;
+                    Toast.makeText(v.getContext(), R.string.no_more_questions, Toast.LENGTH_LONG).show();
+                }
             }
         });
 
